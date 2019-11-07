@@ -54,9 +54,6 @@ const Header = () => {
             <Link href="/contact">
               <a className="navbar-item has-text-weight-semibold">Contact Us</a>
             </Link>
-            <Link href="/schedule">
-              <a className="navbar-item has-text-weight-semibold">Schedule</a>
-            </Link>
             <div className="navbar-item">
               <Link href="/login">
                 <a className="button is-primary">Sign in</a>

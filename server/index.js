@@ -5,11 +5,12 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const dev = process.env.NODE_ENV !== "production";
+const dev = config.environment;
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const userRouter = require("./routes/users");
-const eventRouter = require("./routes/event");
+const userRouter = require("./routes/users.routes");
+const eventRouter = require("./routes/event.routes");
+const signupRouter = require("./routes/signup.routes");
 
 app.prepare().then(() => {
   // express code goes here
@@ -50,9 +51,14 @@ app.prepare().then(() => {
   server.get("/login", (req, res) => {
     return app.render(req, res, "/login", req.query);
   });
-  server.get("/schedule", (req, res) => {
-    return app.render(req, res, "/schedule", req.query);
+  server.route("/signup").get((req, res) => {
+    return app.render(req, res, "/signup", req.query);
   });
+
+  // server.get("/schedule", (req, res) => {
+  //   return app.render(req, res, "/schedule", req.query);
+  // });
+
   server.all("*", (req, res) => {
     return handle(req, res);
   });

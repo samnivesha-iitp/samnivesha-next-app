@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Layout from "../components/layout";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import  { faEnvelope, faCheck, faLock } from '@fortawesome/free-solid-svg-icons'
 
 class Login extends Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <Layout stylesheet="/css/login.css" title="Login Here">
+      <Layout  title="Login Here">
         <div className="hero-body">
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
@@ -41,37 +43,44 @@ class Login extends Component {
                 Please login to proceed.
               </p>
               <div className="box">
-                <figure className="avatar">
-                  <img src="https://placehold.it/128x128" />
-                </figure>
                 <form onSubmit={this.handleSubmit}>
                   <div className="field">
-                    <div className="control">
+                    <p className="control has-icons-left has-icons-right">
                       <input
-                        className="input is-large"
+                        className="input"
                         type="email"
-                        placeholder="Your Email"
-                        autoFocus=""
-                        onChange={this.onChangeEmail}
+                        placeholder="Email"
                         value={this.state.email}
+                        onChange={this.onChangeEmail}
                       />
-                    </div>
+                      <span className="icon is-small is-left">
+                       <FontAwesomeIcon icon={faEnvelope}/>
+                      </span>
+                      <span className="icon is-small is-right">
+                        <FontAwesomeIcon icon={faCheck}/>
+                      </span>
+                    </p>
                   </div>
 
                   <div className="field">
-                    <div className="control">
+                    <p className="control has-icons-left">
                       <input
-                        className="input is-large"
+                        className="input"
                         type="password"
-                        placeholder="Your Password"
+                        placeholder="Password"
                         onChange={this.onChangePassword}
                         value={this.state.password}
                       />
-                    </div>
+                      <span className="icon is-small is-left">
+                        <FontAwesomeIcon icon={faLock}/>
+                      </span>
+                    </p>
                   </div>
-                  <button className="button is-block is-info is-large is-fullwidth">
-                    Login <i className="fa fa-sign-in" aria-hidden="true"></i>
-                  </button>
+                  <div className="field">
+                    <p className="control">
+                      <button className="button is-success">Login</button>
+                    </p>
+                  </div>
                 </form>
               </div>
               <p className="has-text-grey">

@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const { MongoClient } = require("mongodb");
 
 const Users = require("../../models/user.model");
 
@@ -10,12 +9,7 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error" + err));
 });
 router.route("/add").post((req, res) => {
-  const username = req.body.username;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const college = req.body.college;
-  const password = req.body.password;
+  const { username, firstName, lastName, email, password, college } = req.body;
   const BCRYPT_SALT_ROUND = 12;
 
   bcrypt
@@ -42,5 +36,27 @@ router.route("/add").post((req, res) => {
       console.log("Error saving User...", err);
       next();
     });
+});
+router.route("/findByUsername").post((req, res) => {
+  const { username } = req.body;
+  Users.findOne({ username: username }, function(err, user) {
+    if (err) throw err;
+    if (user) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+});
+router.route("/findByEmail").post((req, res) => {
+  const { email } = req.body;
+  Users.findOne({ email: email }, function(err, user) {
+    if (err) throw err;
+    if (user) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
 });
 module.exports = router;
