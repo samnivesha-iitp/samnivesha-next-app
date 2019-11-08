@@ -48,10 +48,11 @@ yarn dev
 # Todo List
 - [ ] Landing Page for `/` route
 - [ ] Blog Page consists of previous year glimpse of Samnivesha events, Guest Lecture and some details about each event
-- [x] Contact page on `/contact` 
-- [ ] about page on `/about`
-- [ ] login will be on `/login`
-- [ ] All signup will be redirected to `/signup`
+- [x] Automatic mailing will happenn for people responding to contact page on `/contact` 
+- [ ] About page will be on `/about`
+- [x] Login will happen on `/login`
+- [x] All signup will be redirected to `/signup`
 - [x] A connection to MongoDB database
-- [ ] A mailing system
-- [ ] A admin Route on `/admin`
+- [ ] Mongoose Schema design for Users, Events
+- [ ] A mailing system setup like express-mailer
+- [ ] A admin Route on `/admin` for managing events 
