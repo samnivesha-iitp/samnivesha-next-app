@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Layout from "../components/layout";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import  { faEnvelope, faCheck, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class Login extends Component {
     this.setState({
       email: e.target.value
     });
-    console.log(this.state);
   }
   onChangePassword(e) {
     this.setState({
@@ -29,11 +29,14 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
+    // axios.post("/login/verify", this.state).then(res => {
+    //   console.log(res);
+    // });
   }
   render() {
     return (
-      <Layout  title="Login Here">
+      <Layout title="Login Here">
         <div className="hero-body">
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
@@ -43,21 +46,22 @@ class Login extends Component {
                 Please login to proceed.
               </p>
               <div className="box">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} action="/login/verify" method="post">
                   <div className="field">
                     <p className="control has-icons-left has-icons-right">
                       <input
                         className="input"
                         type="email"
                         placeholder="Email"
+                        name="email"
                         value={this.state.email}
                         onChange={this.onChangeEmail}
                       />
                       <span className="icon is-small is-left">
-                       <FontAwesomeIcon icon={faEnvelope}/>
+                        <FontAwesomeIcon icon={faEnvelope} />
                       </span>
                       <span className="icon is-small is-right">
-                        <FontAwesomeIcon icon={faCheck}/>
+                        <FontAwesomeIcon icon={faCheck} />
                       </span>
                     </p>
                   </div>
@@ -67,12 +71,13 @@ class Login extends Component {
                       <input
                         className="input"
                         type="password"
+                        name="password"
                         placeholder="Password"
                         onChange={this.onChangePassword}
                         value={this.state.password}
                       />
                       <span className="icon is-small is-left">
-                        <FontAwesomeIcon icon={faLock}/>
+                        <FontAwesomeIcon icon={faLock} />
                       </span>
                     </p>
                   </div>

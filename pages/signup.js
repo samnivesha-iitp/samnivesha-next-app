@@ -86,7 +86,6 @@ class Login extends Component {
             successMsg: "You have successfully registered."
           });
         }
-        console.log(res);
       })
       .catch(err => {
         this.setState({ errorMsg: "An error occured" }), console.log(err);
@@ -176,7 +175,9 @@ class Login extends Component {
                         <p className="help is-danger">
                           This username is not available
                         </p>
-                      ) : null}
+                      ) : (
+                        <p className="help is-danger"></p>
+                      )}
                     </div>
 
                     <div className="field">
@@ -207,7 +208,9 @@ class Login extends Component {
                         <p className="help is-danger">
                           email is already registered
                         </p>
-                      ) : null}
+                      ) : (
+                        <p className="help is-danger"></p>
+                      )}
                     </div>
                     <div className="field">
                       <label className="label">College Name</label>
@@ -238,14 +241,31 @@ class Login extends Component {
                           onChange={this.handlePassword}
                         />
                       </div>
+                      {/* <progress
+                        class="progress is-primary is-small"
+                        value="15"
+                        max="100"
+                      >
+                        15%
+                      </progress> */}
                     </div>
 
                     <div className="field is-grouped">
                       <div className="control">
-                        <button className="button is-link" disabled={this.state.isUserExists|| this.state.isEmailExists} >Submit</button>
+                        <button
+                          className="button is-link"
+                          disabled={
+                            this.state.isUserExists || this.state.isEmailExists
+                          }
+                        >
+                          Submit
+                        </button>
                       </div>
                       <div className="control">
-                        <button className="button is-link is-light" onClick={()=>{}}>
+                        <button
+                          className="button is-link is-light"
+                          onClick={() => {}}
+                        >
                           Cancel
                         </button>
                       </div>
