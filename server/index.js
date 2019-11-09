@@ -46,15 +46,15 @@ app.prepare().then(() => {
   };
   const verifyLogin = (req, res, next) => {
     const { email, password } = req.body;
-    console.log(req.body);
-    Users.findOne({ email: email }, function(err, user) {
+
+    Users.findOne({ email: email }, "email +password", function(err, user) {
       if (err) throw err;
       if (user) {
         if (!bcrypt.compareSync(password, user.password)) {
           res.redirect("/login");
           return { message: "Incorrect password." };
         }
-        console.log(req.session);
+        req.session.userId = user._id;
         res.redirect("/profile");
       }
       next();
@@ -78,7 +78,7 @@ app.prepare().then(() => {
 
   server.use("/users", userRouter);
   server.use("/event", eventRouter);
-  server.use("/profile", (req, res, next) => {
+  server.use("/profile", redirectLogin, (req, res, next) => {
     // console.log(req.session);
     return app.render(req, res, "/profile", req.query);
     next();
@@ -99,14 +99,23 @@ app.prepare().then(() => {
   server.get("/login", redirectHome, (req, res) => {
     return app.render(req, res, "/login", req.query);
   });
-  server.post("/login/verify", verifyLogin);
-  server.route("/signup").get((req, res) => {
+  server.get("/logout", redirectLogin, (req, res) => {
+    req.session.destroy(function(err) {
+      if (err) {
+        res.redirect("/profile");
+        throw err;
+      }
+      res.redirect("/");
+    });
+  });
+  server.post("/login/verify", redirectHome, verifyLogin);
+  server.get("/signup", redirectHome, (req, res) => {
     return app.render(req, res, "/signup", req.query);
   });
 
-  // server.get("/schedule", (req, res) => {
-  //   return app.render(req, res, "/schedule", req.query);
-  // });
+  server.get("/schedule", redirectLogin, (req, res) => {
+    return app.render(req, res, "/schedule", req.query);
+  });
 
   server.all("*", (req, res) => {
     return handle(req, res);

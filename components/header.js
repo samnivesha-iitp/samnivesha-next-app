@@ -7,7 +7,7 @@ const styles = {
     backgroundColor: "#f5f5f5"
   }
 };
-const Header = () => {
+const Header = ({ user }) => {
   return (
     <nav
       className="navbar is-transparent is-spaced"
@@ -17,7 +17,7 @@ const Header = () => {
     >
       <div className="container">
         <div className="navbar-brand">
-          <Link href="/">
+          <Link href={user ? "/profile" : "/"}>
             <a className="navbar-item">
               <img
                 src="/images/samnivesha.png"
@@ -42,23 +42,51 @@ const Header = () => {
         </div>
         <div className="navbar-menu" id="navbarTopMain">
           <div className="navbar-end">
-            <Link href="/blog">
-              <a className="navbar-item has-text-weight-semibold">
-                <span>Blog</span>
-                <span className="tag is-success m-l-5">NEW</span>
-              </a>
-            </Link>
-            <Link href="/about">
-              <a className="navbar-item has-text-weight-semibold">About</a>
-            </Link>
-            <Link href="/contact">
-              <a className="navbar-item has-text-weight-semibold">Contact Us</a>
-            </Link>
-            <div className="navbar-item">
-              <Link href="/login">
-                <a className="button is-primary">Sign in</a>
-              </Link>
-            </div>
+            {!user && (
+              <>
+                <Link href="/blog">
+                  <a className="navbar-item has-text-weight-semibold">
+                    <span>Blog</span>
+                    <span className="tag is-success m-l-5">NEW</span>
+                  </a>
+                </Link>
+                <Link href="/about">
+                  <a className="navbar-item has-text-weight-semibold">About</a>
+                </Link>
+                <Link href="/contact">
+                  <a className="navbar-item has-text-weight-semibold">
+                    Contact Us
+                  </a>
+                </Link>
+              </>
+            )}
+            {user && (
+              <>
+                <Link href="/events">
+                  <a className="navbar-item has-text-weight-semibold">Events</a>
+                </Link>
+                <Link href="/schedule">
+                  <a className="navbar-item has-text-weight-semibold">
+                    Schedule
+                  </a>
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <div className="navbar-item">
+                <Link href="/logout">
+                  <a className="button is-primary">Logout</a>
+                </Link>
+              </div>
+            )}
+            {!user && (
+              <div className="navbar-item">
+                <Link href="/login">
+                  <a className="button is-primary">Sign in</a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

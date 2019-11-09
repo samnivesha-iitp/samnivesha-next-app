@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import Layout from "../components/layout";
+import axios from "axios";
+require('isomorphic-fetch')
 
 class Profile extends Component {
   static async getInitialProps({ req }) {
-    console.log("Query Object", req.session);
-    return {
-      session: {
-        username: "aman29271",
-        firstName: "Aman",
-        lastName: "Kumar",
-        college: "IIT Patna",
-        email: "aman29271@gmail.com"
-      }
-    };
+    const { userId } = req.session;
+    // console.log(userId)
+    const response = await fetch(`http://localhost:3000/users/${userId}`);
+    const data = await response.json()
+    // console.log('@@@@@',data);
+    return { session: data };
+
+    // return {
+    //   session: {
+    //     username: "aman29271",
+    //     firstName: "Aman",
+    //     lastName: "Kumar",
+    //     college: "IIT Patna",
+    //     email: "aman29271@gmail.com"
+    //   }
+    // };
   }
   constructor(props) {
     super(props);

@@ -37,6 +37,11 @@ router.route("/add").post((req, res) => {
       next();
     });
 });
+router.route("/:id").get((req, res) => {
+  Users.findById(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json("Error" + err));
+});
 router.route("/findByUsername").post((req, res) => {
   const { username } = req.body;
   Users.findOne({ username: username }, function(err, user) {

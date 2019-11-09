@@ -1,6 +1,4 @@
 import React from "react";
-import Header from "./header";
-import Footer from "./footer";
 import Head from "next/head";
 
 function Layout({ children, stylesheet, title }) {
@@ -11,9 +9,7 @@ function Layout({ children, stylesheet, title }) {
         {stylesheet ? <link rel="stylesheet" href={stylesheet}></link> : null}
         {/* <script defer src="font-awesome.js"></script> */}
       </Head>
-      <Header />
       {children}
-      <Footer />
     </>
   );
 }
