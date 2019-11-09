@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 
 const Contact = () => {
   return (
-    <Layout stylesheet='/css/contact.css' title='Contact Page'>
+    <Layout title="Contact Page">
       <section className="hero is-fullheight is-light">
         <div className="hero-body">
           <div className="container has-text-centered">
@@ -47,6 +47,29 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      <style global jsx>
+        {`
+          .social-media {
+            margin-top: 30px;
+          }
+
+          .social-media a {
+            margin-right: 10px;
+          }
+
+          .field:not(:last-child) {
+            margin-bottom: 20px;
+          }
+
+          @media screen and (min-width: 768px) {
+            .navbar {
+              padding: 10px 0;
+              position: fixed;
+              width: 100%;
+            }
+          }
+        `}
+      </style>
     </Layout>
   );
 };

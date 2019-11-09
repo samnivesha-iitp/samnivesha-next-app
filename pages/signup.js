@@ -159,7 +159,7 @@ class Login extends Component {
                               : "input is-success"
                           }
                           type="text"
-                          placeholder="Text input"
+                          placeholder="Username"
                           value={this.state.username}
                           name="username"
                           onChange={this.handleUsername}

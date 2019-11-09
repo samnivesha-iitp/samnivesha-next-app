@@ -8,8 +8,6 @@ function Layout({ children, stylesheet, title }) {
     <>
       <Head>
         <title>{title ? `${title}` : "Samnivesha IIT Patna"}</title>
-        <link rel="stylesheet" href="/bulma/css/bulma.css"></link>
-        <link rel="stylesheet" href="/css/style.css"></link>
         {stylesheet ? <link rel="stylesheet" href={stylesheet}></link> : null}
         {/* <script defer src="font-awesome.js"></script> */}
       </Head>

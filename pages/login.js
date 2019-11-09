@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Layout from "../components/layout";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Layout from "../components/layout";
 
 class Login extends Component {
   constructor(props) {
@@ -46,7 +46,11 @@ class Login extends Component {
                 Please login to proceed.
               </p>
               <div className="box">
-                <form onSubmit={this.handleSubmit} action="/login/verify" method="post">
+                <form
+                  onSubmit={this.handleSubmit}
+                  action="/login/verify"
+                  method="post"
+                >
                   <div className="field">
                     <p className="control has-icons-left has-icons-right">
                       <input
