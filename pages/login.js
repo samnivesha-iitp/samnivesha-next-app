@@ -35,10 +35,10 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
-    axios.post("/login/verify", this.state).then(res => {
-      console.log(res);
-    });
+    // e.preventDefault();
+    // axios.post("/login/verify", this.state).then(res => {
+    //   console.log(res);
+    // });
   }
   render() {
     return (

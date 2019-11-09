@@ -3,8 +3,6 @@ const next = require("next");
 const config = require("./config");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const passport = require("passport");
-const localStrategy = require("passport-local").Strategy;
 const uid = require("uid-safe");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
@@ -40,87 +38,68 @@ app.prepare().then(() => {
     cookie: {
       maxAge: 86400 * 1000,
       sameSite: true,
-      secure: config.environment
+      secure: !config.environment
     },
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: db })
   };
-  const localstrategy = new localStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password"
-    },
-    function(email, password, done) {
-      Users.findOne({ email: email }, function(err, user) {
-        if (err) {
-          return done(err);
-        }
-        if (!user) {
-          return done(null, false, { message: "Incorrect username." });
-        }
-
+  const verifyLogin = (req, res, next) => {
+    const { email, password } = req.body;
+    console.log(req.body);
+    Users.findOne({ email: email }, function(err, user) {
+      if (err) throw err;
+      if (user) {
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(null, false, { message: "Incorrect password." });
-        } else {
-          return done(null, user);
+          res.redirect("/login");
+          return { message: "Incorrect password." };
         }
-      });
-    }
-  );
+        console.log(req.session);
+        res.redirect("/profile");
+      }
+      next();
+    });
+  };
 
-  const restrictAccess = (req, res, next) => {
-    if (!req.isAuthenticated()) return res.redirect("/login");
-    return app.render(req, res, "/profile", req.query);
+  const redirectLogin = (req, res, next) => {
+    if (!req.session.userId) return res.redirect("/login");
+    next();
+  };
+  const redirectHome = (req, res, next) => {
+    if (req.session.userId) return res.redirect("/profile");
     next();
   };
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(session(sessionConfig));
 
-  passport.use(localstrategy);
-  server.use(passport.initialize());
-
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-  passport.deserializeUser(function(id, done) {
-    Users.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
-  server.use(passport.session());
-
   server.use(express.static("public"));
   server.use("/bulma", express.static("node_modules/bulma/"));
 
   server.use("/users", userRouter);
   server.use("/event", eventRouter);
-  server.use("/profile", restrictAccess);
+  server.use("/profile", (req, res, next) => {
+    // console.log(req.session);
+    return app.render(req, res, "/profile", req.query);
+    next();
+  });
 
-  server.get("/", (req, res) => {
+  server.get("/", redirectHome, (req, res) => {
     return app.render(req, res, "/", req.query);
   });
-  server.get("/about", (req, res) => {
+  server.get("/about", redirectHome, (req, res) => {
     return app.render(req, res, "/about", req.query);
   });
-  server.get("/contact", (req, res) => {
+  server.get("/contact", redirectHome, (req, res) => {
     return app.render(req, res, "/contact", req.query);
   });
-  server.get("/blog", (req, res) => {
+  server.get("/blog", redirectHome, (req, res) => {
     return app.render(req, res, "/blog", req.query);
   });
-  server.get("/login", (req, res) => {
+  server.get("/login", redirectHome, (req, res) => {
     return app.render(req, res, "/login", req.query);
   });
-  server.post(
-    "/login/verify",
-    passport.authenticate("local", {
-      failureRedirect: "/login",
-      failureMessage: true
-    }),
-    (req, res) => res.redirect("/profile")
-  );
+  server.post("/login/verify", verifyLogin);
   server.route("/signup").get((req, res) => {
     return app.render(req, res, "/signup", req.query);
   });

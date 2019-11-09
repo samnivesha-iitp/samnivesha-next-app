@@ -3,8 +3,16 @@ import Layout from "../components/layout";
 
 class Profile extends Component {
   static async getInitialProps({ req }) {
-    console.log("Query Object", req);
-    return { session: req.user };
+    console.log("Query Object", req.session);
+    return {
+      session: {
+        username: "aman29271",
+        firstName: "Aman",
+        lastName: "Kumar",
+        college: "IIT Patna",
+        email: "aman29271@gmail.com"
+      }
+    };
   }
   constructor(props) {
     super(props);
