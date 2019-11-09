@@ -95,10 +95,15 @@ class Login extends Component {
     return (
       <Layout title="Signup Here">
         <section className="section">
-          <div className="container">
+          <div className="container ">
             <div className="columns">
               <div className="column is-4 is-offset-4">
-                <h3 className="title has-text-black">Signup</h3>
+                <h3
+                  className="title has-text-black"
+                  style={{ textAlign: "center" }}
+                >
+                  Signup
+                </h3>
                 <div className="box">
                   {this.state.successMsg && (
                     <div className="notification is-success">
@@ -168,7 +173,11 @@ class Login extends Component {
                           <FontAwesomeIcon icon={faUser} />
                         </span>
                         <span className="icon is-small is-right">
-                          <FontAwesomeIcon icon={faCheck} />
+                          {this.state.isUserExists ? (
+                            <FontAwesomeIcon icon={faExclamationTriangle} />
+                          ) : this.state.isUserExists == null ? null : (
+                            <FontAwesomeIcon icon={faCheck} />
+                          )}
                         </span>
                       </div>
                       {this.state.isUserExists ? (
@@ -201,7 +210,11 @@ class Login extends Component {
                           <FontAwesomeIcon icon={faEnvelope} />
                         </span>
                         <span className="icon is-small is-right">
-                          <FontAwesomeIcon icon={faExclamationTriangle} />
+                        {this.state.isEmailExists ? (
+                            <FontAwesomeIcon icon={faExclamationTriangle} />
+                          ) : this.state.isEmailExists == null ? null : (
+                            <FontAwesomeIcon icon={faCheck} />
+                          )}
                         </span>
                       </div>
                       {this.state.isEmailExists ? (

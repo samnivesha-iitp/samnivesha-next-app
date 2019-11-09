@@ -10,7 +10,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isEmailExists: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -21,6 +22,11 @@ class Login extends Component {
     this.setState({
       email: e.target.value
     });
+    axios.post("/users/findByEmail", { email: e.target.value }).then(res => {
+      if (res.status == 200) {
+        this.setState({ isEmailExists: res.data });
+      }
+    });
   }
   onChangePassword(e) {
     this.setState({
@@ -29,10 +35,10 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
-    // e.preventDefault();
-    // axios.post("/login/verify", this.state).then(res => {
-    //   console.log(res);
-    // });
+    e.preventDefault();
+    axios.post("/login/verify", this.state).then(res => {
+      console.log(res);
+    });
   }
   render() {
     return (
@@ -65,7 +71,9 @@ class Login extends Component {
                         <FontAwesomeIcon icon={faEnvelope} />
                       </span>
                       <span className="icon is-small is-right">
-                        <FontAwesomeIcon icon={faCheck} />
+                        {this.state.isEmailExists ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </span>
                     </p>
                   </div>

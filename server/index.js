@@ -8,6 +8,7 @@ const localStrategy = require("passport-local").Strategy;
 const uid = require("uid-safe");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
 require("dotenv").config();
 
 const dev = config.environment;
@@ -34,12 +35,16 @@ app.prepare().then(() => {
   });
   db.on("error", console.error.bind(console, "MongoDB Connection Error"));
   const sessionConfig = {
+    name: "sid",
     secret: uid.sync(18),
     cookie: {
-      maxAge: 86400 * 1000
+      maxAge: 86400 * 1000,
+      sameSite: true,
+      secure: config.environment
     },
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: db })
   };
   const localstrategy = new localStrategy(
     {
