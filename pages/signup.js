@@ -8,6 +8,7 @@ import {
   faUser,
   faCheck
 } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 class Login extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Login extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      username: "",
+      username: this.generateId(),
       email: "",
       password: "",
       college: "",
@@ -31,6 +32,9 @@ class Login extends Component {
     this.handlePassword = this.handlePassword.bind(this);
     this.handleCollege = this.handleCollege.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
+  }
+  generateId() {
+    return "ACE" + Math.floor(Math.random() * 10000);
   }
   handleFirstName(e) {
     this.setState({
@@ -64,15 +68,12 @@ class Login extends Component {
         e.target.value.length > 6 ? "input is-success" : "input is-danger"
     });
   }
-  handleUsername(e) {
-    this.setState({
-      username: e.target.value
-    });
+  handleUsername() {
     axios
-      .post("/users/findByUsername", { username: e.target.value })
+      .post("/users/findByUsername", { username: this.state.username })
       .then(res => {
-        if (res.status == 200) {
-          this.setState({ isUserExists: res.data });
+        if (res.status == 200 && res.data == true) {
+          this.setState({ username: this.generateId() });
         }
       });
   }
@@ -83,13 +84,19 @@ class Login extends Component {
       .then(res => {
         if (res.status == 200) {
           this.setState({
-            successMsg: "You have successfully registered."
+            successMsg: `You have successfully registered. Your samnivesha Id is ${this.state.username}`
           });
         }
       })
       .catch(err => {
         this.setState({ errorMsg: "An error occured" }), console.log(err);
       });
+  }
+  componentDidMount() {
+    this.handleUsername();
+  }
+  componentDidUpdate() {
+    this.handleUsername();
   }
   render() {
     return (
@@ -152,41 +159,16 @@ class Login extends Component {
                       </div>
                     </div>
 
-                    <div className="field">
-                      <label className="label">Username</label>
+                    <div className="field" style={{ display: "none" }}>
                       <div className="control has-icons-left has-icons-right">
                         <input
-                          className={
-                            this.state.isUserExists
-                              ? "input is-danger"
-                              : this.state.isUserExists == null
-                              ? "input"
-                              : "input is-success"
-                          }
-                          type="text"
+                          className="input"
+                          type="hidden"
                           placeholder="Username"
                           value={this.state.username}
                           name="username"
-                          onChange={this.handleUsername}
                         />
-                        <span className="icon is-small is-left">
-                          <FontAwesomeIcon icon={faUser} />
-                        </span>
-                        <span className="icon is-small is-right">
-                          {this.state.isUserExists ? (
-                            <FontAwesomeIcon icon={faExclamationTriangle} />
-                          ) : this.state.isUserExists == null ? null : (
-                            <FontAwesomeIcon icon={faCheck} />
-                          )}
-                        </span>
                       </div>
-                      {this.state.isUserExists ? (
-                        <p className="help is-danger">
-                          This username is not available
-                        </p>
-                      ) : (
-                        <p className="help is-danger"></p>
-                      )}
                     </div>
 
                     <div className="field">
@@ -201,7 +183,7 @@ class Login extends Component {
                               : "input is-success"
                           }
                           type="email"
-                          placeholder="Email input"
+                          placeholder="Email"
                           value={this.state.email}
                           name="email"
                           onChange={this.handleEmail}
@@ -210,7 +192,7 @@ class Login extends Component {
                           <FontAwesomeIcon icon={faEnvelope} />
                         </span>
                         <span className="icon is-small is-right">
-                        {this.state.isEmailExists ? (
+                          {this.state.isEmailExists ? (
                             <FontAwesomeIcon icon={faExclamationTriangle} />
                           ) : this.state.isEmailExists == null ? null : (
                             <FontAwesomeIcon icon={faCheck} />
@@ -275,16 +257,14 @@ class Login extends Component {
                         </button>
                       </div>
                       <div className="control">
-                        <button
-                          className="button is-link is-light"
-                          onClick={() => {}}
-                        >
-                          Cancel
-                        </button>
+                        <Link href="/login">
+                          <a className="button is-primary is-light">Login</a>
+                        </Link>
                       </div>
                     </div>
                   </form>
                 </div>
+                
               </div>
             </div>
           </div>

@@ -17,7 +17,7 @@ const Header = ({ user }) => {
     >
       <div className="container">
         <div className="navbar-brand">
-          <Link href={user ? "/profile" : "/"}>
+          <Link href="/">
             <a className="navbar-item">
               <img
                 src="/images/samnivesha.png"
@@ -42,48 +42,44 @@ const Header = ({ user }) => {
         </div>
         <div className="navbar-menu" id="navbarTopMain">
           <div className="navbar-end">
-            {!user && (
-              <>
-                <Link href="/blog">
-                  <a className="navbar-item has-text-weight-semibold">
-                    <span>Blog</span>
-                    <span className="tag is-success m-l-5">NEW</span>
-                  </a>
-                </Link>
-                <Link href="/about">
-                  <a className="navbar-item has-text-weight-semibold">About</a>
-                </Link>
-                <Link href="/contact">
-                  <a className="navbar-item has-text-weight-semibold">
-                    Contact Us
-                  </a>
-                </Link>
-              </>
-            )}
-            {user && (
-              <>
-                <Link href="/events">
-                  <a className="navbar-item has-text-weight-semibold">Events</a>
-                </Link>
-                <Link href="/schedule">
-                  <a className="navbar-item has-text-weight-semibold">
-                    Schedule
-                  </a>
-                </Link>
-              </>
-            )}
+            <Link href="/blog">
+              <a className="navbar-item has-text-weight-semibold">
+                <span>Blog</span>
+                <span className="tag is-success m-l-5">NEW</span>
+              </a>
+            </Link>
 
+            <Link href="/events">
+              <a className="navbar-item has-text-weight-semibold">Events</a>
+            </Link>
+            <Link href="/workshop">
+              <a className="navbar-item has-text-weight-semibold">
+                Guest Lecture
+              </a>
+            </Link>
+            {/* <Link href="/schedule">
+              <a className="navbar-item has-text-weight-semibold">Schedule</a>
+            </Link> */}
+            <Link href="/sponsors">
+              <a className="navbar-item has-text-weight-semibold">Sponsors</a>
+            </Link>
+            <Link href="/about">
+              <a className="navbar-item has-text-weight-semibold">About</a>
+            </Link>
+            <Link href="/contact">
+              <a className="navbar-item has-text-weight-semibold">Contact Us</a>
+            </Link>
             {user && (
               <div className="navbar-item">
                 <Link href="/logout">
-                  <a className="button is-primary">Logout</a>
+                  <a className="button is-info">Logout</a>
                 </Link>
               </div>
             )}
             {!user && (
               <div className="navbar-item">
-                <Link href="/login">
-                  <a className="button is-primary">Sign in</a>
+                <Link href="/signup">
+                  <a className="button is-primary">Register</a>
                 </Link>
               </div>
             )}
