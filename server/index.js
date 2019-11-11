@@ -4,7 +4,6 @@ const config = require("./config");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const uid = require("uid-safe");
-const bcrypt = require("bcrypt");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 require("dotenv").config();
@@ -15,7 +14,14 @@ const handle = app.getRequestHandler();
 const userRouter = require("./routes/users.routes");
 const eventRouter = require("./routes/event.routes");
 const signupRouter = require("./routes/signup.routes");
-const Users = require("../models/user.model");
+const verifyLogin = require("../utils/verifylogin");
+const { redirectHome, redirectLogin } = require("../utils/redirect");
+const sessionConfig = require("../utils/sessionconfig")(
+  uid,
+  config,
+  MongoStore,
+  mongoose.connection
+);
 
 app.prepare().then(() => {
   // express code goes here
@@ -32,43 +38,7 @@ app.prepare().then(() => {
     console.log("MongoDB database connection established successfully.");
   });
   db.on("error", console.error.bind(console, "MongoDB Connection Error"));
-  const sessionConfig = {
-    name: "sid",
-    secret: uid.sync(18),
-    cookie: {
-      maxAge: 86400 * 1000,
-      sameSite: true,
-      secure: !config.environment
-    },
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: db })
-  };
-  const verifyLogin = (req, res, next) => {
-    const { email, password } = req.body;
 
-    Users.findOne({ email: email }, "email +password", function(err, user) {
-      if (err) throw err;
-      if (user) {
-        if (!bcrypt.compareSync(password, user.password)) {
-          res.redirect("/login");
-          return { message: "Incorrect password." };
-        }
-        req.session.userId = user._id;
-        res.redirect("/profile");
-      }
-      next();
-    });
-  };
-
-  const redirectLogin = (req, res, next) => {
-    if (!req.session.userId) return res.redirect("/login");
-    next();
-  };
-  const redirectHome = (req, res, next) => {
-    if (req.session.userId) return res.redirect("/profile");
-    next();
-  };
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(session(sessionConfig));
