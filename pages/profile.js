@@ -35,7 +35,8 @@ class Profile extends Component {
     return (
       <Layout>
         <div className="container">
-          <h1 className="title is-4">Hi {this.state.fullName}</h1>
+          <h1 className="title is-4">Welcome, {this.state.fullName}</h1>
+          <h2 className="title is-5">Samnivesha Id : {this.state.username}</h2>
           <h2 className="title is-5">College : {this.state.college}</h2>
           <h2 className="title is-5">Email: {this.state.email}</h2>
         </div>
