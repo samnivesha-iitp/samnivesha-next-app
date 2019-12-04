@@ -54,9 +54,6 @@ app.prepare().then(() => {
     next();
   });
 
-  server.get("/", redirectHome, (req, res) => {
-    return app.render(req, res, "/", req.query);
-  });
   server.get("/about", redirectHome, (req, res) => {
     return app.render(req, res, "/about", req.query);
   });
@@ -66,6 +63,7 @@ app.prepare().then(() => {
   server.get("/blog", redirectHome, (req, res) => {
     return app.render(req, res, "/blog", req.query);
   });
+  server.post("/login/verify", redirectHome, verifyLogin);
   server.get("/login", redirectHome, (req, res) => {
     return app.render(req, res, "/login", req.query);
   });
@@ -78,13 +76,15 @@ app.prepare().then(() => {
       res.redirect("/");
     });
   });
-  server.post("/login/verify", redirectHome, verifyLogin);
   server.get("/signup", redirectHome, (req, res) => {
     return app.render(req, res, "/signup", req.query);
   });
 
   server.get("/schedule", redirectLogin, (req, res) => {
     return app.render(req, res, "/schedule", req.query);
+  });
+  server.get("/", redirectHome, (req, res) => {
+    return app.render(req, res, "/", req.query);
   });
 
   server.all("*", (req, res) => {
