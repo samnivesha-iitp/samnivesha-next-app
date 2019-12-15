@@ -1,5 +1,8 @@
-const unsplashUrl =
-  "https://source.unsplash.com/collection/8313047?auto=format";
+const { backgroundImage } = require("../archieve/collections");
+const num = backgroundImage.length;
+
+const randomNum = Math.floor(Math.random() * (num - 1));
+const unsplashUrl = backgroundImage[randomNum];
 function ImageLoader(url = unsplashUrl) {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
