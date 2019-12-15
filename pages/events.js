@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Layout from "../components/layout";
-import "bootstrap/scss/bootstrap.scss";
 import unsplashUrl from "../utils/fetchImage";
 
 class events extends Component {

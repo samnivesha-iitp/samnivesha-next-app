@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import Layout from "../components/layout";
-import axios from "axios";
-require('isomorphic-fetch')
+require("isomorphic-fetch");
 
 class Profile extends Component {
   static async getInitialProps({ req }) {
     const { userId } = req.session;
     // console.log(userId)
     const response = await fetch(`http://localhost:3000/users/${userId}`);
-    const data = await response.json()
+    const data = await response.json();
     // console.log('@@@@@',data);
     return { session: data };
 
@@ -34,12 +33,20 @@ class Profile extends Component {
   render() {
     return (
       <Layout>
-        <div className="container">
-          <h1 className="title is-4">Welcome, {this.state.fullName}</h1>
-          <h2 className="title is-5">Samnivesha Id : {this.state.username}</h2>
-          <h2 className="title is-5">College : {this.state.college}</h2>
-          <h2 className="title is-5">Email: {this.state.email}</h2>
-        </div>
+        <main className="main">
+          <section className="hero is-medium">
+            <div className="hero-body">
+              <div className="container">
+                <h1 className="title is-4">Welcome, {this.state.fullName}</h1>
+                <h2 className="title is-5">
+                  Samnivesha Id : {this.state.username}
+                </h2>
+                <h2 className="title is-5">College : {this.state.college}</h2>
+                <h2 className="title is-5">Email: {this.state.email}</h2>
+              </div>
+            </div>
+          </section>
+        </main>
       </Layout>
     );
   }

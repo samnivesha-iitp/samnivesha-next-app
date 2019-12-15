@@ -26,7 +26,7 @@ const Header = ({ user }) => {
                 src="/images/samnivesha.png"
                 alt="Bulma Rent"
                 width="34"
-                height="28"
+                height="20"
               />
             </a>
           </Link>
@@ -63,28 +63,42 @@ const Header = ({ user }) => {
             {/* <Link href="/schedule">
               <a className="navbar-item has-text-weight-semibold">Schedule</a>
             </Link> */}
-            <Link href="/sponsors">
-              <a className="navbar-item has-text-weight-semibold">Sponsors</a>
-            </Link>
-            <Link href="/about">
-              <a className="navbar-item has-text-weight-semibold">About</a>
-            </Link>
-            <Link href="/contact">
-              <a className="navbar-item has-text-weight-semibold">Contact Us</a>
-            </Link>
+
             {user && (
-              <div className="navbar-item">
-                <Link href="/logout">
-                  <a className="button is-info">Logout</a>
+              <>
+                <Link href="/profile">
+                  <a className="navbar-item has-text-weight-semibold">
+                    Profile
+                  </a>
                 </Link>
-              </div>
+                <div className="navbar-item">
+                  <Link href="/logout">
+                    <a className="button is-info">Logout</a>
+                  </Link>
+                </div>
+              </>
             )}
             {!user && (
-              <div className="navbar-item">
-                <Link href="/signup">
-                  <a className="button is-primary">Register</a>
+              <>
+                <Link href="/sponsors">
+                  <a className="navbar-item has-text-weight-semibold">
+                    Sponsors
+                  </a>
                 </Link>
-              </div>
+                <Link href="/about">
+                  <a className="navbar-item has-text-weight-semibold">About</a>
+                </Link>
+                <Link href="/contact">
+                  <a className="navbar-item has-text-weight-semibold">
+                    Contact Us
+                  </a>
+                </Link>
+                <div className="navbar-item">
+                  <Link href="/signup">
+                    <a className="button is-primary">Register</a>
+                  </Link>
+                </div>
+              </>
             )}
           </div>
         </div>

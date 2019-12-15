@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import Layout from "../components/layout";
-// import mainStyles from "../components/css/main.style";
-import "bootstrap/scss/bootstrap.scss";
-import unsplashUrl from "../utils/fetchImage";
-import ImageLoader from "../utils/fetchImage";
 
 class About extends Component {
   constructor(props) {
@@ -13,7 +9,7 @@ class About extends Component {
   // componentDidMount() {};
   render() {
     return (
-      <Layout title="About Us">
+      <Layout title="About Us" stylesheet="/css/bootstrap.min.css">
         <div className="bg-light">
           <div className="container py-5">
             <div className="row h-100 align-items-center py-5">
