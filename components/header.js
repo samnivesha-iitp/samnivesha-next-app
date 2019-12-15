@@ -26,7 +26,7 @@ const Header = ({ user }) => {
                 src="/images/samnivesha.png"
                 alt="Bulma Rent"
                 width="34"
-                height="20"
+                height="28"
               />
             </a>
           </Link>

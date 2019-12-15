@@ -27,11 +27,11 @@ class MyApp extends App {
       user: this.user
     };
     return (
-      <>
+      <React.Fragment>
         <Header user={this.state.user} />
         <Component {...props} />
         <Footer />
-      </>
+      </React.Fragment>
     );
   }
 }
