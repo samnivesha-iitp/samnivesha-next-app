@@ -27,6 +27,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
     </Layout>
   );
 };

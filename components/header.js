@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import headerStyles from "./css/header.style";
 // import "../public/css/style.css";
@@ -11,6 +11,13 @@ const styles = {
   }
 };
 const Header = ({ user }) => {
+  const [isMobile, setIsMobile] = useState("");
+  const hideMenu = () => {
+    setIsMobile("");
+  };
+  const showMenu = () => {
+    setIsMobile("is-active");
+  };
   return (
     <nav
       className="navbar is-transparent is-spaced"
@@ -33,30 +40,48 @@ const Header = ({ user }) => {
 
           <a
             role="button"
-            className="navbar-burger burger"
+            className={`navbar-burger burger ${isMobile}`}
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarTopMain"
+            onClick={() => {
+              if (isMobile == "is-active") {
+                hideMenu();
+              } else {
+                showMenu();
+              }
+            }}
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <div className="navbar-menu" id="navbarTopMain">
+        <div className={`navbar-menu ${isMobile}`} id="navbarTopMain">
           <div className="navbar-end">
             <Link href="/blog">
-              <a className="navbar-item has-text-weight-semibold">
+              <a
+                className="navbar-item has-text-weight-semibold"
+                onClick={hideMenu}
+              >
                 <span>Blog</span>
                 <span className="tag is-success m-l-5">NEW</span>
               </a>
             </Link>
 
             <Link href="/events">
-              <a className="navbar-item has-text-weight-semibold">Events</a>
+              <a
+                className="navbar-item has-text-weight-semibold"
+                onClick={hideMenu}
+              >
+                Events
+              </a>
             </Link>
             <Link href="/workshop">
-              <a className="navbar-item has-text-weight-semibold">
+              <a
+                className="navbar-item has-text-weight-semibold"
+                onClick={hideMenu}
+              >
                 Guest Lecture
               </a>
             </Link>
@@ -67,13 +92,18 @@ const Header = ({ user }) => {
             {user && (
               <>
                 <Link href="/profile">
-                  <a className="navbar-item has-text-weight-semibold">
+                  <a
+                    className="navbar-item has-text-weight-semibold"
+                    onClick={hideMenu}
+                  >
                     Profile
                   </a>
                 </Link>
                 <div className="navbar-item">
                   <Link href="/logout">
-                    <a className="button is-info">Logout</a>
+                    <a className="button is-info" onClick={hideMenu}>
+                      Logout
+                    </a>
                   </Link>
                 </div>
               </>
@@ -81,21 +111,34 @@ const Header = ({ user }) => {
             {!user && (
               <>
                 <Link href="/sponsors">
-                  <a className="navbar-item has-text-weight-semibold">
+                  <a
+                    className="navbar-item has-text-weight-semibold"
+                    onClick={hideMenu}
+                  >
                     Sponsors
                   </a>
                 </Link>
                 <Link href="/about">
-                  <a className="navbar-item has-text-weight-semibold">About</a>
+                  <a
+                    className="navbar-item has-text-weight-semibold"
+                    onClick={hideMenu}
+                  >
+                    About
+                  </a>
                 </Link>
                 <Link href="/contact">
-                  <a className="navbar-item has-text-weight-semibold">
+                  <a
+                    className="navbar-item has-text-weight-semibold"
+                    onClick={hideMenu}
+                  >
                     Contact Us
                   </a>
                 </Link>
                 <div className="navbar-item">
                   <Link href="/signup">
-                    <a className="button is-primary">Register</a>
+                    <a className="button is-primary" onClick={hideMenu}>
+                      Register
+                    </a>
                   </Link>
                 </div>
               </>

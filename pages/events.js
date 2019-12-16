@@ -3,18 +3,27 @@ import Layout from "../components/layout";
 import unsplashUrl from "../utils/fetchImage";
 
 class events extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      innerWidth: ""
+    };
+  }
+  componentDidMount() {
+    this.setState({ innerWidth: window.innerWidth });
+  }
   render() {
     return (
       <Layout title="Event Details">
         <main className="main">
           <section
-            className="hero background-image is-large"
+            className="hero background-image is-fullheight"
             style={{
-              backgroundColor: "#1e0000",
+              backgroundColor: "#fff",
               backgroundImage: `url(
-              ${unsplashUrl}
+              ${unsplashUrl}&w=${this.state.innerWidth}
             )`,
-              backgroundRepeat: "repeat-x"
+              backgroundRepeat: "repeat-y"
             }}
           >
             <div
