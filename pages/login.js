@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Layout from "../components/layout";
-import unsplashUrl from "../utils/fetchImage";
 import { backgroundImage } from "../archieve/collections";
 
 class Login extends Component {
