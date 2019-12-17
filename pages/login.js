@@ -6,6 +6,9 @@ import axios from "axios";
 import Layout from "../components/layout";
 import { backgroundImage } from "../archieve/collections";
 
+const config = require('../server/config')
+
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -113,7 +116,7 @@ class Login extends Component {
                     </form>
                   </div>
                   <p className="has-text-grey">
-                    <Link href="/signup">
+                    <Link href="/signup" prefetch={!config.environment}>
                       <a>Sign Up</a>
                     </Link>
                     <Link href="/forgotPassword">

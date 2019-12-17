@@ -4,13 +4,17 @@ require("isomorphic-fetch");
 
 class Profile extends Component {
   static async getInitialProps({ req }) {
-    const { userId } = req.session;
-    // console.log(userId)
-    const response = await fetch(`http://localhost:3000/users/${userId}`);
-    const data = await response.json();
-    // console.log('@@@@@',data);
-    return { session: data };
-
+    if (typeof window === "undefined") {
+      const { userId } = req.session;
+      const response = await fetch(`http://localhost:3000/users/${userId}`);
+      const data = await response.json();
+      // console.log('@@@@@@',req.session)
+      // console.log('@@@@@',data);
+      return { session: data };
+    }
+    if (typeof window !== "undefined") {
+      return { session: window.__APP_USER_PROFILE__ };
+    }
     // return {
     //   session: {
     //     username: "aman29271",
@@ -23,12 +27,29 @@ class Profile extends Component {
   }
   constructor(props) {
     super(props);
-    this.state = {
-      username: props.session.username,
-      fullName: props.session.firstName + " " + props.session.lastName,
-      college: props.session.college,
-      email: props.session.email
-    };
+    if (typeof window === "undefined") {
+      this.state = {
+        username: props.session.username,
+        fullName: props.session.firstName + " " + props.session.lastName,
+        college: props.session.college,
+        email: props.session.email
+      };
+    }
+    if (typeof window !== "undefined") {
+      this.state = {
+        username: window.__APP_USER_PROFILE__.username,
+        fullName:
+          window.__APP_USER_PROFILE__.firstName +
+          " " +
+          window.__APP_USER_PROFILE__.lastName,
+        college: window.__APP_USER_PROFILE__.college,
+        email: window.__APP_USER_PROFILE__.email
+      };
+    }
+  }
+  componentDidMount() {
+    window.__APP_USER_PROFILE__ = this.props.session;
+    // console.log("window", window.__APP_USER_PROFILE__);
   }
   render() {
     return (

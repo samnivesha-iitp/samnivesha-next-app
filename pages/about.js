@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Layout from "../components/layout";
 import Head from "next/head";
 
+
 class About extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +13,8 @@ class About extends Component {
     return (
       <>
         <Head>
-          <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
+          <link rel="preload"   href="/css/bootstrap.min.css" as="style" type="text/css"></link>
+          <link rel="stylesheet"   href="/css/bootstrap.min.css"  type="text/css"></link>
         </Head>
         <Layout title="About Us">
           <div className="bg-light">

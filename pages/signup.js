@@ -11,6 +11,8 @@ import {
 import Link from "next/link";
 import { backgroundImage } from "../archieve/collections";
 
+const config = require("../server/config");
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class Login extends Component {
       isEmailExists: null,
       successMsg: "",
       errorMsg: "",
-      innerWidth: ""
+      innerWidth: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -268,7 +270,7 @@ class Login extends Component {
                             </button>
                           </div>
                           <div className="control">
-                            <Link href="/login">
+                            <Link href="/login" prefetch={!config.environment}>
                               <a className="button is-primary is-light">
                                 Login
                               </a>

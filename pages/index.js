@@ -7,7 +7,7 @@ class Home extends Component {
     return (
       <>
         <Head>
-          <link rel="stylesheet" href="/css/index/core.css"></link>
+          <link rel="stylesheet" href="/css/index/core.css" ></link>
         </Head>
         <Layout title="Samnivesha | Home">
           <section className="hero is-fullheight is-light">

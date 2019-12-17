@@ -8,17 +8,19 @@ class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
     if (Component.getInitialProps) {
+      console.log('this has run.')
       pageProps = await Component.getInitialProps(ctx);
     }
     if (ctx.req && ctx.req.session.userId) {
       pageProps.user = ctx.req.session.userId;
+      return { pageProps };
     }
-    return { pageProps };
+    return { pageProps: null };
   }
   constructor(props) {
     super(props);
     this.state = {
-      user: props.pageProps.user,
+      user: props.pageProps == null ? null : props.pageProps.user,
       isLoading: true
     };
   }
@@ -29,13 +31,19 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
     const props = {
       ...pageProps,
-      user: this.user
+      user: this.state.user
     };
     const loader = this.state.isLoading ? "is-active" : "";
 
     return (
       <React.Fragment>
         <Head>
+          <link
+            rel="preload"
+            href="/css/index/pageloader.css"
+            as="style"
+            type="text/css"
+          ></link>
           <link rel="stylesheet" href="/css/index/pageloader.css"></link>
         </Head>
         <div className={`pageloader ${loader}`}></div>

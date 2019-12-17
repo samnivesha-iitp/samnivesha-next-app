@@ -3,6 +3,8 @@ import Link from "next/link";
 import headerStyles from "./css/header.style";
 // import "../public/css/style.css";
 
+const config = require('../server/config')
+
 const styles = {
   nav: {
     backgroundColor: "unset",
@@ -27,7 +29,7 @@ const Header = ({ user }) => {
     >
       <div className="container">
         <div className="navbar-brand">
-          <Link href="/">
+          <Link href="/" prefetch={!config.environment}>
             <a className="navbar-item">
               <img
                 src="/images/samnivesha.png"
@@ -59,7 +61,7 @@ const Header = ({ user }) => {
         </div>
         <div className={`navbar-menu ${isMobile}`} id="navbarTopMain">
           <div className="navbar-end">
-            <Link href="/blog">
+            <Link href="/blog" prefetch={!config.environment}>
               <a
                 className="navbar-item has-text-weight-semibold"
                 onClick={hideMenu}
@@ -69,7 +71,7 @@ const Header = ({ user }) => {
               </a>
             </Link>
 
-            <Link href="/events">
+            <Link href="/events" prefetch={!config.environment}>
               <a
                 className="navbar-item has-text-weight-semibold"
                 onClick={hideMenu}
@@ -77,7 +79,7 @@ const Header = ({ user }) => {
                 Events
               </a>
             </Link>
-            <Link href="/workshop">
+            <Link href="/workshop" prefetch={!config.environment}>
               <a
                 className="navbar-item has-text-weight-semibold"
                 onClick={hideMenu}
@@ -91,7 +93,7 @@ const Header = ({ user }) => {
 
             {user && (
               <>
-                <Link href="/profile">
+                <Link href="/profile" prefetch={!config.environment}>
                   <a
                     className="navbar-item has-text-weight-semibold"
                     onClick={hideMenu}
@@ -100,7 +102,7 @@ const Header = ({ user }) => {
                   </a>
                 </Link>
                 <div className="navbar-item">
-                  <Link href="/logout">
+                  <Link href="/logout" prefetch={!config.environment}>
                     <a className="button is-info" onClick={hideMenu}>
                       Logout
                     </a>
@@ -110,7 +112,7 @@ const Header = ({ user }) => {
             )}
             {!user && (
               <>
-                <Link href="/sponsors">
+                <Link href="/sponsors" prefetch={!config.environment}>
                   <a
                     className="navbar-item has-text-weight-semibold"
                     onClick={hideMenu}
@@ -118,7 +120,7 @@ const Header = ({ user }) => {
                     Sponsors
                   </a>
                 </Link>
-                <Link href="/about">
+                <Link href="/about" prefetch={!config.environment}>
                   <a
                     className="navbar-item has-text-weight-semibold"
                     onClick={hideMenu}
@@ -126,7 +128,7 @@ const Header = ({ user }) => {
                     About
                   </a>
                 </Link>
-                <Link href="/contact">
+                <Link href="/contact" prefetch={!config.environment}>
                   <a
                     className="navbar-item has-text-weight-semibold"
                     onClick={hideMenu}
@@ -135,7 +137,7 @@ const Header = ({ user }) => {
                   </a>
                 </Link>
                 <div className="navbar-item">
-                  <Link href="/signup">
+                  <Link href="/signup" prefetch={!config.environment}>
                     <a className="button is-primary" onClick={hideMenu}>
                       Register
                     </a>
