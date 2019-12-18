@@ -15,34 +15,15 @@ export default class MyDocument extends Document {
       data = '';
     }
     return { html, head, errorHtml, chunks, styles, data };
-    // try {
-    //   ctx.renderPage = () =>
-    //     originalRenderPage({
-    //       enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
-    //     });
-
-    //   const initialProps = await Document.getInitialProps(ctx);
-    //   return {
-    //     ...initialProps,
-    //     styles: (
-    //       <>
-    //         {initialProps.styles}
-    //         {sheet.getStyleElement()}
-    //       </>
-    //     )
-    //   };
-    // } finally {
-    //   sheet.seal();
-    // }
   }
   render() {
     return (
       <Html>
         <Head>
           <link rel="stylesheet" href="/bulma/css/bulma.min.css"></link>
-          <script id="session"
+          <script id="session" type="application/json"
             dangerouslySetInnerHTML={{
-              __html: `window.__APP_USER_PROFILE__ = ${JSON.stringify(this.props.data)}`
+              __html: `${JSON.stringify(this.props.data)}`
             }}
           />
         </Head>

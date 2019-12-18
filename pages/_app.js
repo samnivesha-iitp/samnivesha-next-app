@@ -8,7 +8,6 @@ class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
     if (Component.getInitialProps) {
-      console.log('this has run.')
       pageProps = await Component.getInitialProps(ctx);
     }
     if (ctx.req && ctx.req.session.userId) {
