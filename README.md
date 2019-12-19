@@ -49,10 +49,10 @@ yarn dev
 - [ ] Landing Page for `/` route
 - [ ] Blog Page consists of previous year glimpse of Samnivesha events, Guest Lecture and some details about each event
 - [x] Automatic mailing will happenn for people responding to contact page on `/contact` 
-- [ ] About page will be on `/about`
+- [x] About page will be on `/about`
 - [x] Login will happen on `/login`
 - [x] All signup will be redirected to `/signup`
 - [x] A connection to MongoDB database
-- [ ] Mongoose Schema design for Users, Events
-- [ ] A mailing system setup like express-mailer
+- [x] Mongoose Schema design for Users, Events
+- [x] A mailing system setup like express-mailer
 - [ ] A admin Route on `/admin` for managing events 

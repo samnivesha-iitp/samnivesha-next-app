@@ -16,6 +16,7 @@ const eventRouter = require("./routes/event.routes");
 const signupRouter = require("./routes/signup.routes");
 const verifyLogin = require("../utils/verifylogin");
 const { redirectHome, redirectLogin } = require("../utils/redirect");
+const sendMail = require("../utils/sendmail");
 const sessionConfig = require("../utils/sessionconfig")(
   uid,
   config,
@@ -57,6 +58,7 @@ app.prepare().then(() => {
   server.get("/about", redirectHome, (req, res) => {
     return app.render(req, res, "/about", req.query);
   });
+  server.post("/mail", redirectHome, sendMail);
   server.get("/contact", redirectHome, (req, res) => {
     return app.render(req, res, "/contact", req.query);
   });
