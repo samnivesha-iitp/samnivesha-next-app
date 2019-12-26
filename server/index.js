@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const uid = require("uid-safe");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const compression = require("compression");
+const helmet = require("helmet");
+const csurf = require("csurf");
 require("dotenv").config();
 
 const dev = config.environment;
@@ -29,6 +32,7 @@ app.prepare().then(() => {
   const server = express();
 
   const uri = "mongodb://localhost:27017/samnivesha";
+  const csrfprotection = csurf({ cookie: false });
   mongoose.connect(uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -40,6 +44,8 @@ app.prepare().then(() => {
   });
   db.on("error", console.error.bind(console, "MongoDB Connection Error"));
 
+  server.use(compression());
+  server.use(helmet());
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(session(sessionConfig));
@@ -59,14 +65,14 @@ app.prepare().then(() => {
     return app.render(req, res, "/about", req.query);
   });
   server.post("/mail", redirectHome, sendMail);
-  server.get("/contact", redirectHome, (req, res) => {
+  server.get("/contact", redirectHome, csrfprotection, (req, res) => {
     return app.render(req, res, "/contact", req.query);
   });
   server.get("/blog", redirectHome, (req, res) => {
     return app.render(req, res, "/blog", req.query);
   });
   server.post("/login/verify", redirectHome, verifyLogin);
-  server.get("/login", redirectHome, (req, res) => {
+  server.get("/login", redirectHome, csrfprotection, (req, res) => {
     return app.render(req, res, "/login", req.query);
   });
   server.get("/logout", redirectLogin, (req, res) => {
@@ -78,7 +84,7 @@ app.prepare().then(() => {
       res.redirect("/");
     });
   });
-  server.get("/signup", redirectHome, (req, res) => {
+  server.get("/signup", redirectHome, csrfprotection, (req, res) => {
     return app.render(req, res, "/signup", req.query);
   });
 
